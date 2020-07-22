@@ -42,6 +42,26 @@ import static ru.at.library.core.steps.OtherSteps.*;
 public class WebActionSteps {
     private CoreScenario coreScenario = CoreScenario.getInstance();
 
+
+    /**
+     * Проверка того, что все элементы, которые описаны в классе страницы с аннотацией @Name,
+     * но без аннотации @Optional появились на странице
+     * в течение WAITING_APPEAR_TIMEOUT, которое равно значению свойства "waitingAppearTimeout"
+     * из application.properties. Если свойство не найдено, время таймаута равно 8 секундам
+     *
+     * @param nameOfPage название страница|блок|форма|вкладка
+     */
+    @И("^(?:страница|блок|форма|вкладка) \"([^\"]*)\" (?:загрузилась|загрузился)$")
+    public void loadPage(String nameOfPage) {
+        coreScenario.setCurrentPage(coreScenario.getPage(nameOfPage));
+        if (isIE()) {
+            coreScenario.getCurrentPage().ieAppeared();
+        } else {
+            coreScenario.getCurrentPage().appeared();
+        }
+    }
+
+
     /**
      * Выполняется переход по заданной ссылке.
      * Шаг содержит проверку, что после перехода загружена заданная страница.
@@ -81,39 +101,6 @@ public class WebActionSteps {
         coreScenario.write(" url = " + url());
     }
 
-    /**
-     * Проверка того, что все элементы, которые описаны в классе страницы с аннотацией @Name,
-     * но без аннотации @Optional появились на странице
-     * в течение WAITING_APPEAR_TIMEOUT, которое равно значению свойства "waitingAppearTimeout"
-     * из application.properties. Если свойство не найдено, время таймаута равно 8 секундам
-     *
-     * @param nameOfPage название страница|блок|форма|вкладка
-     */
-    @И("^(?:страница|блок|форма|вкладка) \"([^\"]*)\" (?:загрузилась|загрузился)$")
-    public void loadPage(String nameOfPage) {
-        coreScenario.setCurrentPage(coreScenario.getPage(nameOfPage));
-        if (isIE()) {
-            coreScenario.getCurrentPage().ieAppeared();
-        } else {
-            coreScenario.getCurrentPage().appeared();
-        }
-    }
-
-    /**
-     * Проверка того, что все элементы, которые описаны в классе страницы с аннотацией @Name,
-     * но без аннотации @Optional, не появились на странице
-     *
-     * @param nameOfPage название страница|блок|форма|вкладка
-     */
-    @И("^(?:страница|блок|форма|вкладка) \"([^\"]*)\" не (?:загрузилась|загрузился)$")
-    public void loadPageFailed(String nameOfPage) {
-        coreScenario.setCurrentPage(coreScenario.getPage(nameOfPage));
-        if (isIE()) {
-            coreScenario.getCurrentPage().ieDisappeared();
-        } else {
-            coreScenario.getCurrentPage().disappeared();
-        }
-    }
 
     /**
      * На странице происходит click по заданному элементу
