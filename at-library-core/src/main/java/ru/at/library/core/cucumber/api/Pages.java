@@ -16,6 +16,7 @@ import com.google.common.collect.Maps;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -27,7 +28,7 @@ public final class Pages {
     /**
      * Страницы, на которых будет производится тестирование < Имя, Страница >
      */
-    private Map<String, CorePage> pages;
+    private Map<String, List<CorePage>> pages;
 
     /**
      * Страница, на которой в текущий момент производится тестирование
@@ -95,12 +96,12 @@ public final class Pages {
         return (T) page;
     }
 
-    private Map<String, CorePage> getPageMapInstanceInternal() {
+    private Map<String, List<CorePage>> getPageMapInstanceInternal() {
         return pages;
     }
 
     private CorePage getPageFromPagesByName(String pageName) throws IllegalArgumentException {
-        CorePage page = getPageMapInstanceInternal().get(pageName);
+        CorePage page = getPageMapInstanceInternal().get(pageName).get(0);
         if (page == null)
             throw new IllegalArgumentException(pageName + " page is not declared in a list of available pages");
         return page;
@@ -112,7 +113,7 @@ public final class Pages {
     public <T extends CorePage> void put(String pageName, T page) throws IllegalArgumentException {
         if (page == null)
             throw new IllegalArgumentException("Была передана пустая страница");
-        pages.put(pageName, page);
+        pages.get(pageName).add(page);
     }
 
     /**
@@ -125,6 +126,7 @@ public final class Pages {
         Constructor<? extends CorePage> constructor = page.getDeclaredConstructor();
         constructor.setAccessible(true);
         CorePage p = page.newInstance();
-        pages.put(pageName, p);
+        if(pages.get(page))
+        pages.get(pageName).add(p);
     }
 }
