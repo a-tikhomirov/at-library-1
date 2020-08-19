@@ -16,7 +16,6 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.qameta.allure.Attachment;
-import io.restassured.RestAssured;
 import lombok.experimental.Delegate;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.logging.LogType;
@@ -71,8 +70,9 @@ public class InitialSetupSteps {
         scenarioNumber++;
 
         log.info("Старт сценария №" + scenarioNumber + " с именем: " + scenario.getName());
+        System.out.println("Старт сценария №" + scenarioNumber + " с именем: " + scenario.getName());
 
-        RestAssured.baseURI = System.getProperty("baseURI", tryLoadProperty("baseURI"));
+//        RestAssured.baseURI = System.getProperty("baseURI", tryLoadProperty("baseURI"));
         baseUrl = System.getProperty("baseURI", tryLoadProperty("baseURI"));
 
         /**

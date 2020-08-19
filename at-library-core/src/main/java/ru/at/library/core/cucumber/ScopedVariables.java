@@ -12,18 +12,15 @@
 package ru.at.library.core.cucumber;
 
 import com.google.common.collect.Maps;
-import groovy.lang.GroovyShell;
 import lombok.extern.log4j.Log4j2;
 import ru.at.library.core.cucumber.api.CoreScenario;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.String.format;
 import static ru.at.library.core.core.helpers.PropertyLoader.loadProperty;
-import static ru.at.library.core.core.helpers.Utils.isJSONValid;
 
 /**
  * Реализация хранилища переменных, заданных пользователем, внутри тестовых сценариев
@@ -62,52 +59,52 @@ public class ScopedVariables {
         return newString;
     }
 
-    /**
-     * @param inputJsonAsString заданная строка
-     * @return новая строка
-     * Производит поиск параметров в переданном строкой json.
-     * В случае нахождения параметра - заменяет его значение на значение из properties или хранилища переменных
-     */
-    public static String resolveJsonVars(String inputJsonAsString) {
-        if (isJSONValid(inputJsonAsString)) return inputJsonAsString;
-        Pattern p = Pattern.compile(CURVE_BRACES_PATTERN);
-        Matcher m = p.matcher(inputJsonAsString);
-        String newString = "";
-        while (m.find()) {
-            String varName = m.group(1);
-            String value = loadProperty(varName, (String) CoreScenario.getInstance().tryGetVar(varName));
-            if (value == null) {
-                log.trace(
-                        "Значение " + varName +
-                                " не было найдено ни в application.properties, ни в environment переменной");
-            }
-            newString = m.replaceFirst(value);
-            if (isJSONValid(newString)) return newString;
-            m = p.matcher(newString);
-        }
-        if (newString.isEmpty()) {
-            newString = inputJsonAsString;
-        }
-        return newString;
-    }
+//    /**
+//     * @param inputJsonAsString заданная строка
+//     * @return новая строка
+//     * Производит поиск параметров в переданном строкой json.
+//     * В случае нахождения параметра - заменяет его значение на значение из properties или хранилища переменных
+//     */
+//    public static String resolveJsonVars(String inputJsonAsString) {
+//        if (isJSONValid(inputJsonAsString)) return inputJsonAsString;
+//        Pattern p = Pattern.compile(CURVE_BRACES_PATTERN);
+//        Matcher m = p.matcher(inputJsonAsString);
+//        String newString = "";
+//        while (m.find()) {
+//            String varName = m.group(1);
+//            String value = loadProperty(varName, (String) CoreScenario.getInstance().tryGetVar(varName));
+//            if (value == null) {
+//                log.trace(
+//                        "Значение " + varName +
+//                                " не было найдено ни в application.properties, ни в environment переменной");
+//            }
+//            newString = m.replaceFirst(value);
+//            if (isJSONValid(newString)) return newString;
+//            m = p.matcher(newString);
+//        }
+//        if (newString.isEmpty()) {
+//            newString = inputJsonAsString;
+//        }
+//        return newString;
+//    }
 
-    /**
-     * @param expression java/groovy-код, который будет выполнен
-     *                   Компилирует и выполняет в рантайме переданный на вход java/groovy-код.
-     *                   Предварительно загружает в память все переменные,
-     *                   т.е. на вход в строковом аргументе могут быть переданы переменные из "variables"
-     */
-    public Object evaluate(String expression) {
-        GroovyShell shell = new GroovyShell();
-        variables.entrySet().forEach(e -> {
-            try {
-                shell.setVariable(e.getKey(), new BigDecimal(e.getValue().toString()));
-            } catch (NumberFormatException exp) {
-                shell.setVariable(e.getKey(), e.getValue());
-            }
-        });
-        return shell.evaluate(expression);
-    }
+//    /**
+//     * @param expression java/groovy-код, который будет выполнен
+//     *                   Компилирует и выполняет в рантайме переданный на вход java/groovy-код.
+//     *                   Предварительно загружает в память все переменные,
+//     *                   т.е. на вход в строковом аргументе могут быть переданы переменные из "variables"
+//     */
+//    public Object evaluate(String expression) {
+//        GroovyShell shell = new GroovyShell();
+//        variables.entrySet().forEach(e -> {
+//            try {
+//                shell.setVariable(e.getKey(), new BigDecimal(e.getValue().toString()));
+//            } catch (NumberFormatException exp) {
+//                shell.setVariable(e.getKey(), e.getValue());
+//            }
+//        });
+//        return shell.evaluate(expression);
+//    }
 
     /**
      * @param textToReplaceIn строка, в которой необходимо выполнить замену (не модифицируется)

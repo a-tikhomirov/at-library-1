@@ -11,9 +11,9 @@
 
     <modules>
         <module>at-library-core</module>
-        <module>at-library-mobile</module>
+<!--        <module>at-library-mobile</module>-->
         <module>at-library-web</module>
-        <module>at-library-api</module>
+<!--        <module>at-library-api</module>-->
     </modules>
 
     <properties>
@@ -38,7 +38,7 @@
         <!--HAMCREST-->
         <hamcrest.version>2.1</hamcrest.version>
         <!--LOG-->
-        <logging.version>2.11.2</logging.version>
+        <logging.version>2.13.3</logging.version>
         <!--ВСПОМОГАТЕЛЬНЫЕ БИБЛИОТЕКИ-->
         <reflections.version>0.9.10</reflections.version>
         <guava.version>23.0</guava.version>
@@ -59,29 +59,14 @@
             <artifactId>aspectjrt</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
-        <!--MOBILE ТЕСТИРОВАНИЕ-->
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>${io.appium.java-client.version}</version>
-        </dependency>
+
         <!--WEB ТЕСТИРОВАНИЕ-->
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>${selenide.version}</version>
         </dependency>
-        <!--API ТЕСТИРОВАНИЕ-->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${rest-assured.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>${rest-assured.version}</version>
-        </dependency>
+
         <!--CUCUMBER-->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -109,11 +94,7 @@
             <artifactId>allure-selenide</artifactId>
             <version>${allure.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-rest-assured</artifactId>
-            <version>${allure.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit4</artifactId>
@@ -125,6 +106,8 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
+
         <!--LOG-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -136,6 +119,8 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${logging.version}</version>
         </dependency>
+
+
         <!--ВСПОМОГАТЕЛЬНЫЕ БИБЛИОТЕКИ-->
         <dependency>
             <groupId>org.reflections</groupId>
@@ -195,12 +180,7 @@
             <artifactId>mockneat</artifactId>
             <version>0.3.7</version>
         </dependency>
-        <!--ПРОКСИРОВАНИЕ-->
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>mitmproxy-java</artifactId>
-            <version>2.0.1</version>
-        </dependency>
+
     </dependencies>
 
     <build>

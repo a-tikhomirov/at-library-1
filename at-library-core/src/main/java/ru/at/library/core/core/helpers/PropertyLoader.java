@@ -12,7 +12,6 @@
 package ru.at.library.core.core.helpers;
 
 import com.google.common.base.Strings;
-import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -184,10 +182,10 @@ public class PropertyLoader {
         if (CoreScenario.getInstance().tryGetVar(valueToFind) != null) {
             Object var = CoreScenario.getInstance().getVar(valueToFind);
             //TODO нужно зарефакторить
-            if (var instanceof Response) {
-                return ((Response) var).getBody().asString();
-            }
-            return (String) var;
+//            if (var instanceof Response) {
+//                return ((Response) var).getBody().asString();
+//            }
+//            return (String) var;
         }
         log.trace("Значение не найдено в хранилище. Будет исользовано значение по умолчанию " + valueToFind);
         return valueToFind;
@@ -219,43 +217,43 @@ public class PropertyLoader {
         if (CoreScenario.getInstance().tryGetVar(valueToFind) != null) {
             Object var = CoreScenario.getInstance().getVar(valueToFind);
             //TODO нужно зарефакторить
-            if (var instanceof Response) {
-                return ((Response) var).getBody().asString();
-            }
-            return (String) var;
+//            if (var instanceof Response) {
+//                return ((Response) var).getBody().asString();
+//            }
+//            return (String) var;
         }
         log.trace("Значение не найдено в хранилище. Будет исользовано значение по умолчанию " + valueToFind);
         return valueToFind;
     }
-
-    /**
-     * Циклически подставляет параметры из application.properties, содержимое файла по переданному пути,
-     * значение из хранилища переменных или как String аргумент
-     *
-     * @param processingValue - строка, содержащая в фигурных скобках ключи к значению в application.properties, переменные сценариев,
-     *                        названия путей к файлам c нужным значением, значения как строки. Пример:
-     *                        123{var_name} 456{prop_name} 789{file_path_from_project_root}
-     * @return значение как String после всевозможных замен
-     */
-    public static String cycleSubstitutionFromFileOrPropertyOrVariable(String processingValue) {
-        String savedValue;
-        do {
-            savedValue = processingValue;
-            List<String> matches = Utils.getMatchesByRegex(processingValue, "\\{[^\\s{}]+}");
-            if (matches.size() == 0) {
-                return processingValue;
-            }
-            for (String match : matches) {
-                String oldValue = match.substring(1, match.length() - 1);
-                String newValue = loadValueFromFileOrPropertyOrVariableOrDefault(oldValue);
-                if (!oldValue.equals(newValue)) {
-                    processingValue = processingValue.replace(match, newValue);
-                }
-            }
-        } while (!processingValue.equals(savedValue));
-
-        return processingValue;
-    }
+//
+//    /**
+//     * Циклически подставляет параметры из application.properties, содержимое файла по переданному пути,
+//     * значение из хранилища переменных или как String аргумент
+//     *
+//     * @param processingValue - строка, содержащая в фигурных скобках ключи к значению в application.properties, переменные сценариев,
+//     *                        названия путей к файлам c нужным значением, значения как строки. Пример:
+//     *                        123{var_name} 456{prop_name} 789{file_path_from_project_root}
+//     * @return значение как String после всевозможных замен
+//     */
+//    public static String cycleSubstitutionFromFileOrPropertyOrVariable(String processingValue) {
+//        String savedValue;
+//        do {
+//            savedValue = processingValue;
+//            List<String> matches = Utils.getMatchesByRegex(processingValue, "\\{[^\\s{}]+}");
+//            if (matches.size() == 0) {
+//                return processingValue;
+//            }
+//            for (String match : matches) {
+//                String oldValue = match.substring(1, match.length() - 1);
+//                String newValue = loadValueFromFileOrPropertyOrVariableOrDefault(oldValue);
+//                if (!oldValue.equals(newValue)) {
+//                    processingValue = processingValue.replace(match, newValue);
+//                }
+//            }
+//        } while (!processingValue.equals(savedValue));
+//
+//        return processingValue;
+//    }
 
     /**
      * Вспомогательный метод, возвращает свойства из файла /application.properties

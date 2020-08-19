@@ -23,17 +23,17 @@
     </Appenders>
 
     <Loggers>
-        <Root level="WARN" additivity="false">
+        <Root level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+<!--            <AppenderRef ref="File"/>-->
         </Root>
-        <Logger name="ru.at.library.core.core.log.Log4jRestAssuredFilter" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
-        </Logger>
-        <Logger name="ru" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
-        </Logger>
+<!--        <Logger name="ru.at.library.core.core.log.Log4jRestAssuredFilter" level="INFO" additivity="false">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--        </Logger>-->
+<!--        <Logger name="ru" level="INFO" additivity="false">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="File"/>-->
+<!--        </Logger>-->
     </Loggers>
 </Configuration>

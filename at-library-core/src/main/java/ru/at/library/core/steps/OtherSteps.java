@@ -8,8 +8,6 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import ru.at.library.core.cucumber.api.CoreScenario;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -243,10 +241,10 @@ public class OtherSteps {
      *                   OR string.equals("string")
      *                   Любое Java-выражение, возвращающие boolean
      */
-    @И("^верно, что \"([^\"]*)\"$")
-    public void expressionExpression(String expression) {
-        coreScenario.getVars().evaluate("assert(" + expression + ")");
-    }
+//    @И("^верно, что \"([^\"]*)\"$")
+//    public void expressionExpression(String expression) {
+//        coreScenario.getVars().evaluate("assert(" + expression + ")");
+//    }
 
     /**
      * Сохранено значение из property файла в переменную
@@ -295,21 +293,21 @@ public class OtherSteps {
         coreScenario.setVar(varName, template);
     }
 
-    /**
-     * Валидация что текст является email-ом
-     */
-    @И("^значение переменной \"([^\"]*)\" является email-ом$")
-    public void checkEmail(String variableName) throws AddressException {
-        String valueVariable = coreScenario.getVar(variableName).toString();
-        new InternetAddress(valueVariable)
-                .validate();
-    }
+//    /**
+//     * Валидация что текст является email-ом
+//     */
+//    @И("^значение переменной \"([^\"]*)\" является email-ом$")
+//    public void checkEmail(String variableName) throws AddressException {
+//        String valueVariable = coreScenario.getVar(variableName).toString();
+//        new InternetAddress(valueVariable)
+//                .validate();
+//    }
 
     /**
      * Валидация что текст является email-ом
      */
     @И("^длина строки переменной \"([^\"]*)\" ((?:больше|меньше|равна)) (\\d+)$")
-    public void checkEmail(String variableName, String condition, int expectedLength) throws AddressException {
+    public void checkEmail(String variableName, String condition, int expectedLength)  {
         int actualLength = coreScenario.getVar(variableName).toString().length();
         switch (condition) {
             case "больше": {
